@@ -35,6 +35,7 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: "300",
     marginTop: 100,
+    fontVariant: ["tabular-nums"], // fixed with character
   },
   row: {
     flexDirection: "row",
