@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet } from "react-native";
 
 import { View, Text } from "components/themed";
-import { white, slate, red, green } from "constants/Colors";
+import Colors from "constants/Colors";
 import useColorScheme from "hooks/useColorScheme";
 
 type CircleButtonProps = {
@@ -17,43 +17,24 @@ export const CircleButton = ({
 }: CircleButtonProps) => {
   const theme = useColorScheme();
 
-  let btnColorDark = slate["600"];
-  let txtColorDark = slate["100"];
-
-  let btnColorLight = slate["500"];
-  let txtColorLight = slate["100"];
+  let btnColor = Colors[theme].btnBg;
+  let txtColor = Colors[theme].btnText;
 
   if (color === "green") {
-    btnColorDark = green["700"];
-    txtColorDark = green["100"];
-
-    btnColorLight = green["700"];
-    txtColorLight = green["100"];
+    btnColor = Colors[theme].btnBgGreen;
+    txtColor = Colors[theme].btnTextGreen;
   }
 
   if (color === "red") {
-    btnColorDark = red["700"];
-    txtColorDark = red["100"];
-
-    btnColorLight = red["700"];
-    txtColorLight = red["100"];
+    btnColor = Colors[theme].btnBgRed;
+    txtColor = Colors[theme].btnTextRed;
   }
-
-  const borderColor = theme === "dark" ? btnColorDark : btnColorLight;
 
   return (
     <Pressable onPress={onPress}>
-      <View style={[styles.btnBorder, { borderColor }]}>
-        <View
-          style={styles.btn}
-          darkColor={btnColorDark}
-          lightColor={btnColorLight}
-        >
-          <Text
-            style={styles.text}
-            darkColor={txtColorDark}
-            lightColor={txtColorLight}
-          >
+      <View style={[styles.btnBorder, { borderColor: btnColor }]}>
+        <View style={styles.btn} darkColor={btnColor} lightColor={btnColor}>
+          <Text style={styles.text} darkColor={txtColor} lightColor={txtColor}>
             {children}
           </Text>
         </View>
@@ -77,6 +58,8 @@ const styles = StyleSheet.create({
   },
 
   text: {
-    fontSize: 15,
+    fontSize: 16,
+    letterSpacing: 0.25,
+    fontWeight: "600",
   },
 });
