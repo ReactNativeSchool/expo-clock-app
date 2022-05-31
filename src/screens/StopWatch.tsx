@@ -2,17 +2,26 @@ import { StyleSheet } from "react-native";
 
 import { Text, View, StatusBar, SafeAreaView } from "components/themed";
 import { CircleButton } from "components/buttons";
+import { useStopWatch } from "hooks/useStopWatch";
 
 const StopWatch = () => {
+  const { time, isRunning, start, stop, reset } = useStopWatch();
+
   return (
     <SafeAreaView style={{ flex: 1 }}>
       <StatusBar />
       <View style={styles.container}>
-        <Text style={styles.timeText}>00:00:00</Text>
+        <Text style={styles.timeText}>{time}</Text>
+
         <View style={styles.row}>
-          <CircleButton onPress={() => alert("todo")}>Reset</CircleButton>
-          <CircleButton onPress={() => alert("todo")} color="green">
-            Start
+          <CircleButton onPress={() => reset()}>Reset</CircleButton>
+          <CircleButton
+            onPress={() => {
+              isRunning ? stop() : start();
+            }}
+            color={isRunning ? "red" : "green"}
+          >
+            {isRunning ? "Stop" : "Start"}
           </CircleButton>
         </View>
       </View>
