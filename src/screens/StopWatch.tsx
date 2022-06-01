@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
     fontSize: 60,
     fontWeight: "300",
     marginTop: 100,
-    fontVariant: ["tabular-nums"], // fixed with character
+    fontVariant: ["tabular-nums"], // fixed width character
   },
   row: {
     flexDirection: "row",
@@ -96,7 +96,6 @@ const styles = StyleSheet.create({
   lapsContainer: {
     flex: 1,
     width: "100%",
-    // marginHorizontal: 20,
     paddingHorizontal: 10,
     marginTop: 20,
   },
@@ -110,7 +109,7 @@ const styles = StyleSheet.create({
   },
   lapText: {
     fontSize: 18,
-    fontVariant: ["tabular-nums"], // fixed with character
+    fontVariant: ["tabular-nums"], // fixed width character
   },
 });
 
