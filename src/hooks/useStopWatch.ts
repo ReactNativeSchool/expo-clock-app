@@ -50,21 +50,42 @@ export const useStopWatch = () => {
     setLaps((laps) => [time, ...laps]);
   };
 
+  let slowestLapTime: number | undefined;
+  let fastestLapTime: number | undefined;
+  const formattedLapData = laps.map((l, index) => {
+    const previousLap = laps[index + 1] || 0;
+    const lapTime = l - previousLap;
+
+    if (!slowestLapTime || lapTime > slowestLapTime) {
+      slowestLapTime = lapTime;
+    }
+
+    if (!fastestLapTime || lapTime < fastestLapTime) {
+      fastestLapTime = lapTime;
+    }
+
+    return {
+      time: formatMs(lapTime),
+      lap: laps.length - index,
+    };
+  });
+
   return {
+    // Data
     time: formatMs(time),
     currentLapTime: laps[0] ? formatMs(time - laps[0] || 0) : formatMs(time),
+    laps: formattedLapData,
+    slowestLapTime: formatMs(slowestLapTime || 0),
+    fastestLapTime: formatMs(fastestLapTime || 0),
+
+    // Booleans
     hasStarted: time > 0,
     isRunning,
+
+    // Actions
     start,
     stop,
     reset,
     lap,
-    laps: laps.map((l, index) => {
-      const previousLap = laps[index + 1] || 0;
-      return {
-        time: formatMs(l - previousLap),
-        lap: laps.length - index,
-      };
-    }),
   };
 };

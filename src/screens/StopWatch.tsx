@@ -1,4 +1,4 @@
-import { StyleSheet, ScrollView, ViewStyle } from "react-native";
+import { StyleSheet, ScrollView, ViewStyle, TextStyle } from "react-native";
 
 import { Text, View, StatusBar, SafeAreaView } from "components/themed";
 import { CircleButton } from "components/buttons";
@@ -10,10 +10,12 @@ const LapRow = ({
   lap,
   time,
   isFirst,
+  style,
 }: {
   lap: number;
   time: string;
   isFirst: boolean;
+  style?: "green" | "red";
 }) => {
   const theme = useColorScheme();
 
@@ -22,15 +24,22 @@ const LapRow = ({
     styles.lapRow,
     { borderBottomColor: borderColor },
   ];
+  const textStyles: TextStyle[] = [styles.lapText];
 
   if (isFirst) {
     rowStyles.push({ borderTopColor: borderColor });
   }
 
+  if (style === "green") {
+    textStyles.push({ color: Colors[theme].btnBgGreen, fontWeight: "bold" });
+  } else if (style === "red") {
+    textStyles.push({ color: Colors[theme].btnBgRed, fontWeight: "bold" });
+  }
+
   return (
     <View style={rowStyles}>
-      <Text style={styles.lapText}>Lap {lap}</Text>
-      <Text style={styles.lapText}>{time}</Text>
+      <Text style={textStyles}>Lap {lap}</Text>
+      <Text style={textStyles}>{time}</Text>
     </View>
   );
 };
@@ -46,6 +55,8 @@ const StopWatch = () => {
     laps,
     currentLapTime,
     hasStarted,
+    slowestLapTime,
+    fastestLapTime,
   } = useStopWatch();
 
   return (
@@ -76,14 +87,24 @@ const StopWatch = () => {
           {hasStarted && (
             <LapRow time={currentLapTime} lap={laps.length + 1} isFirst />
           )}
-          {laps.map((lapInfo) => (
-            <LapRow
-              key={lapInfo.lap}
-              time={lapInfo.time}
-              lap={lapInfo.lap}
-              isFirst={false}
-            />
-          ))}
+          {laps.map((lapInfo) => {
+            let style: "green" | "red" | undefined;
+            if (lapInfo.time === fastestLapTime) {
+              style = "green";
+            } else if (lapInfo.time === slowestLapTime) {
+              style = "red";
+            }
+
+            return (
+              <LapRow
+                key={lapInfo.lap}
+                time={lapInfo.time}
+                lap={lapInfo.lap}
+                isFirst={false}
+                style={style}
+              />
+            );
+          })}
         </ScrollView>
       </View>
     </SafeAreaView>
