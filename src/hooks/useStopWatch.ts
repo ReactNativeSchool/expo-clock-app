@@ -1,5 +1,10 @@
 import { useState } from "react";
 
+export type LapData = {
+  time: string;
+  lap: number;
+};
+
 const formatMs = (milliseconds: number) => {
   const seconds = Math.floor(milliseconds % 60);
   const prettySeconds = seconds < 10 ? `0${seconds}` : seconds;
