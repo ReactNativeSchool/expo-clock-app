@@ -36,7 +36,17 @@ const LapRow = ({
 };
 
 const StopWatch = () => {
-  const { time, isRunning, start, stop, reset, lap, laps } = useStopWatch();
+  const {
+    time,
+    isRunning,
+    start,
+    stop,
+    reset,
+    lap,
+    laps,
+    currentLapTime,
+    hasStarted,
+  } = useStopWatch();
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
@@ -63,12 +73,15 @@ const StopWatch = () => {
         </View>
 
         <ScrollView style={styles.lapsContainer}>
-          {laps.map((lapInfo, index) => (
+          {hasStarted && (
+            <LapRow time={currentLapTime} lap={laps.length + 1} isFirst />
+          )}
+          {laps.map((lapInfo) => (
             <LapRow
               key={lapInfo.lap}
               time={lapInfo.time}
               lap={lapInfo.lap}
-              isFirst={index === 0}
+              isFirst={false}
             />
           ))}
         </ScrollView>

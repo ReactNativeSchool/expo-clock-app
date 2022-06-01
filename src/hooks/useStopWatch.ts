@@ -52,6 +52,8 @@ export const useStopWatch = () => {
 
   return {
     time: formatMs(time),
+    currentLapTime: laps[0] ? formatMs(time - laps[0] || 0) : formatMs(time),
+    hasStarted: time > 0,
     isRunning,
     start,
     stop,
