@@ -1,7 +1,7 @@
 import { View as DefaultView } from "react-native";
 import { SafeAreaView as DefaultSafeAreaView } from "react-native-safe-area-context";
 
-import { useThemeColor } from "./useThemeColor";
+import { useThemeColor } from "hooks/useThemeColor";
 import { ViewProps } from "./types";
 
 export function View(props: ViewProps) {
