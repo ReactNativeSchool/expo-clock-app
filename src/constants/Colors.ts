@@ -8,12 +8,11 @@ export default {
   light: {
     text: black,
     background: white,
+    border: "#ccc",
 
     btnBg: "#dbdbdb",
     btnText: "#333333",
 
-    // btnBgRed: "#320e0b",
-    // btnTextRed: "#e83f34",
     btnBgRed: "#e83f34",
     btnTextRed: "#320e0b",
 
@@ -23,6 +22,7 @@ export default {
   dark: {
     text: white,
     background: black,
+    border: "#ccc",
 
     btnBg: "#333333",
     btnText: white,

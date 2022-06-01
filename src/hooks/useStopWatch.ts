@@ -18,6 +18,7 @@ export const useStopWatch = () => {
   const [isRunning, setIsRunning] = useState(false);
   const [runningInterval, setRunningInterval] =
     useState<ReturnType<typeof setInterval>>();
+  const [laps, setLaps] = useState<number[]>([]);
 
   const start = () => {
     setIsRunning(true);
@@ -39,9 +40,14 @@ export const useStopWatch = () => {
   const reset = () => {
     setIsRunning(false);
     setTime(0);
+    setLaps([]);
     if (runningInterval) {
       setRunningInterval(undefined);
     }
+  };
+
+  const lap = () => {
+    setLaps((laps) => [time, ...laps]);
   };
 
   return {
@@ -50,5 +56,13 @@ export const useStopWatch = () => {
     start,
     stop,
     reset,
+    lap,
+    laps: laps.map((l, index) => {
+      const previousLap = laps[index + 1] || 0;
+      return {
+        time: formatMs(l - previousLap),
+        lap: laps.length - index,
+      };
+    }),
   };
 };
