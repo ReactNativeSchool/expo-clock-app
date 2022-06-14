@@ -1,10 +1,14 @@
 // Colors
 // https://github.com/tailwindlabs/tailwindcss/blob/master/src/public/colors.js
 
+// https://dribbble.com/shots/10839777-iOS-Clock-App-Light-and-Dark-Theme
+
+import { DefaultTheme, DarkTheme } from "@react-navigation/native";
+
 export const white = "#fff";
 export const black = "#000000";
 
-export default {
+const Themes = {
   light: {
     text: black,
     background: white,
@@ -34,3 +38,29 @@ export default {
     btnTextGreen: "#26ae49",
   },
 };
+
+export const ReactNavigationLightTheme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: "#e8513c",
+    background: Themes.light.background,
+    card: Themes.light.background,
+    text: Themes.light.text,
+    border: Themes.light.border,
+  },
+};
+
+export const ReactNavigationDarkTheme = {
+  ...DarkTheme,
+  colors: {
+    ...DarkTheme.colors,
+    primary: "#f45357",
+    background: Themes.dark.background,
+    card: Themes.dark.background,
+    text: Themes.dark.text,
+    border: Themes.dark.border,
+  },
+};
+
+export default Themes;

@@ -1,9 +1,9 @@
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
-import StopWatch from "screens/StopWatch";
+import RootNavigation from "navigation/RootNavigation";
 
 export default () => (
   <SafeAreaProvider>
-    <StopWatch />
+    <RootNavigation />
   </SafeAreaProvider>
 );
