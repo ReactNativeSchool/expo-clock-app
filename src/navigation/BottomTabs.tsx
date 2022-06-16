@@ -46,6 +46,7 @@ const BottomTabs = () => {
         options={{
           title: "World Clock",
           tabBarIcon: (props) => <TabBarIcon name="globe" {...props} />,
+          headerShown: true,
         }}
       />
       <Tab.Screen
@@ -54,6 +55,7 @@ const BottomTabs = () => {
         options={{
           title: "Alarm",
           tabBarIcon: (props) => <TabBarIcon name="alarm" {...props} />,
+          headerShown: true,
         }}
       />
       <Tab.Screen

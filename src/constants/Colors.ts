@@ -11,6 +11,8 @@ export const black = "#000000";
 const Themes = {
   light: {
     text: black,
+    textSubtle: "#595959",
+
     background: white,
     border: "#ccc",
 
@@ -28,6 +30,8 @@ const Themes = {
   },
   dark: {
     text: white,
+    textSubtle: "#595959",
+
     background: black,
     border: "#ccc",
 
