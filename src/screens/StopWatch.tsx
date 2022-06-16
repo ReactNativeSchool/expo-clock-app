@@ -2,7 +2,7 @@ import { StyleSheet } from "react-native";
 
 import { Text, View, StatusBar, SafeAreaView } from "components/themed";
 import { CircleButton } from "components/buttons";
-import { useStopWatch, LapData } from "hooks/useStopWatch";
+import { useStopWatch } from "hooks/useStopWatch";
 import { LapList } from "components/lists";
 
 const StopWatch = () => {
