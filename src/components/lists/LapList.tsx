@@ -30,9 +30,9 @@ const LapRow = ({
   }
 
   if (style === "green") {
-    textStyles.push({ color: Colors[theme].btnBgGreen, fontWeight: "bold" });
+    textStyles.push({ color: Colors[theme].textGreen, fontWeight: "bold" });
   } else if (style === "red") {
-    textStyles.push({ color: Colors[theme].btnBgRed, fontWeight: "bold" });
+    textStyles.push({ color: Colors[theme].textRed, fontWeight: "bold" });
   }
 
   return (

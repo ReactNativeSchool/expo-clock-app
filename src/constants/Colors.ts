@@ -12,6 +12,8 @@ const Themes = {
   light: {
     text: black,
     textSubtle: "#595959",
+    textGreen: "#06d6a0",
+    textRed: "#ef476f",
 
     background: white,
     border: "#ccc",
@@ -31,6 +33,8 @@ const Themes = {
   dark: {
     text: white,
     textSubtle: "#595959",
+    textGreen: "#06d6a0",
+    textRed: "#ef476f",
 
     background: black,
     border: "#ccc",
