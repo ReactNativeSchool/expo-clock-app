@@ -1,8 +1,7 @@
 import { Pressable, StyleSheet } from "react-native";
 
 import { View, Text } from "components/themed";
-import Colors from "constants/Colors";
-import useColorScheme from "hooks/useColorScheme";
+import { useThemeColors } from "hooks/useThemeColors";
 
 type CircleButtonProps = {
   onPress: () => void;
@@ -15,28 +14,26 @@ export const CircleButton = ({
   children,
   color,
 }: CircleButtonProps) => {
-  const theme = useColorScheme();
+  const { colors } = useThemeColors();
 
-  let btnColor = Colors[theme].btnBg;
-  let txtColor = Colors[theme].btnText;
+  let btnColor = colors.btnBg;
+  let txtColor = colors.btnText;
 
   if (color === "green") {
-    btnColor = Colors[theme].btnBgGreen;
-    txtColor = Colors[theme].btnTextGreen;
+    btnColor = colors.btnBgGreen;
+    txtColor = colors.btnTextGreen;
   }
 
   if (color === "red") {
-    btnColor = Colors[theme].btnBgRed;
-    txtColor = Colors[theme].btnTextRed;
+    btnColor = colors.btnBgRed;
+    txtColor = colors.btnTextRed;
   }
 
   return (
     <Pressable onPress={onPress}>
       <View style={[styles.btnBorder, { borderColor: btnColor }]}>
-        <View style={styles.btn} darkColor={btnColor} lightColor={btnColor}>
-          <Text style={styles.text} darkColor={txtColor} lightColor={txtColor}>
-            {children}
-          </Text>
+        <View style={[styles.btn, { backgroundColor: btnColor }]}>
+          <Text style={[styles.text, { color: txtColor }]}>{children}</Text>
         </View>
       </View>
     </Pressable>

@@ -6,7 +6,7 @@ import Alarm from "screens/Alarm";
 import StopWatch from "screens/StopWatch";
 import Timer from "src/screens/Timer";
 
-import { useThemeColor } from "hooks/useThemeColor";
+import { useThemeColors } from "hooks/useThemeColors";
 
 type TabBarIconProps = {
   color: string;
@@ -28,15 +28,14 @@ type BottomTabsParamList = {
 const Tab = createBottomTabNavigator<BottomTabsParamList>();
 
 const BottomTabs = () => {
-  const tabBarInactiveTintColor = useThemeColor({}, "tabBarInactive");
-  const tabBarActiveTintColor = useThemeColor({}, "tabBarActive");
+  const { colors } = useThemeColors();
 
   return (
     <Tab.Navigator
       initialRouteName="StopWatch"
       screenOptions={{
-        tabBarInactiveTintColor,
-        tabBarActiveTintColor,
+        tabBarInactiveTintColor: colors.tabBarInactive,
+        tabBarActiveTintColor: colors.tabBarActive,
         headerShown: false,
       }}
     >

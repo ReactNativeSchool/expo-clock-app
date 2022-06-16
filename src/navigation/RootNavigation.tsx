@@ -1,7 +1,7 @@
 import { NavigationContainer } from "@react-navigation/native";
 
 import BottomTabs from "navigation/BottomTabs";
-import useColorScheme from "hooks/useColorScheme";
+import { useThemeColors } from "hooks/useThemeColors";
 
 import {
   ReactNavigationLightTheme,
@@ -9,7 +9,7 @@ import {
 } from "constants/Colors";
 
 const RootNavigation = () => {
-  const theme = useColorScheme();
+  const { theme } = useThemeColors();
 
   return (
     <NavigationContainer

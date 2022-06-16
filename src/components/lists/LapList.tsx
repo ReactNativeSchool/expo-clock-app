@@ -2,8 +2,7 @@ import { StyleSheet, ScrollView, ViewStyle, TextStyle } from "react-native";
 
 import { Text, View } from "components/themed";
 import { LapData } from "hooks/useStopWatch";
-import useColorScheme from "hooks/useColorScheme";
-import Colors from "constants/Colors";
+import { useThemeColors } from "hooks/useThemeColors";
 
 const LapRow = ({
   lap,
@@ -16,9 +15,9 @@ const LapRow = ({
   isFirst: boolean;
   style?: "green" | "red";
 }) => {
-  const theme = useColorScheme();
+  const { colors } = useThemeColors();
 
-  const borderColor = Colors[theme].border;
+  const borderColor = colors.border;
   const rowStyles: ViewStyle[] = [
     styles.lapRow,
     { borderBottomColor: borderColor },
@@ -30,9 +29,9 @@ const LapRow = ({
   }
 
   if (style === "green") {
-    textStyles.push({ color: Colors[theme].textGreen, fontWeight: "bold" });
+    textStyles.push({ color: colors.textGreen, fontWeight: "bold" });
   } else if (style === "red") {
-    textStyles.push({ color: Colors[theme].textRed, fontWeight: "bold" });
+    textStyles.push({ color: colors.textRed, fontWeight: "bold" });
   }
 
   return (

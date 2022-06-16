@@ -1,14 +1,14 @@
 import { StyleSheet } from "react-native";
 
 import { Text, View } from "components/themed";
-import { useThemeColor } from "src/hooks/useThemeColor";
+import { useThemeColors } from "hooks/useThemeColors";
 
 export default () => {
-  const textColor = useThemeColor({}, "textSubtle");
+  const { colors } = useThemeColors();
 
   return (
     <View style={styles.container}>
-      <Text style={[styles.text, { color: textColor }]}>No Alarms</Text>
+      <Text style={[styles.text, { color: colors.textSubtle }]}>No Alarms</Text>
     </View>
   );
 };
