@@ -4,7 +4,7 @@ import { Ionicons } from "@expo/vector-icons";
 import WorldClock from "screens/WorldClock";
 import Alarm from "screens/Alarm";
 import StopWatch from "screens/StopWatch";
-import Timer from "src/screens/Timer";
+import Settings from "src/screens/Settings";
 
 import { useThemeColors } from "hooks/useThemeColors";
 
@@ -22,7 +22,7 @@ type BottomTabsParamList = {
   WorldClock: undefined;
   Alarm: undefined;
   StopWatch: undefined;
-  Timer: undefined;
+  Settings: undefined;
 };
 
 const Tab = createBottomTabNavigator<BottomTabsParamList>();
@@ -36,7 +36,6 @@ const BottomTabs = () => {
       screenOptions={{
         tabBarInactiveTintColor: colors.tabBarInactive,
         tabBarActiveTintColor: colors.tabBarActive,
-        headerShown: false,
       }}
     >
       <Tab.Screen
@@ -45,7 +44,6 @@ const BottomTabs = () => {
         options={{
           title: "World Clock",
           tabBarIcon: (props) => <TabBarIcon name="globe" {...props} />,
-          headerShown: true,
         }}
       />
       <Tab.Screen
@@ -54,7 +52,6 @@ const BottomTabs = () => {
         options={{
           title: "Alarm",
           tabBarIcon: (props) => <TabBarIcon name="alarm" {...props} />,
-          headerShown: true,
         }}
       />
       <Tab.Screen
@@ -63,14 +60,15 @@ const BottomTabs = () => {
         options={{
           title: "Stopwatch",
           tabBarIcon: (props) => <TabBarIcon name="stopwatch" {...props} />,
+          headerShown: false,
         }}
       />
       <Tab.Screen
-        name="Timer"
-        component={Timer}
+        name="Settings"
+        component={Settings}
         options={{
-          title: "Timer",
-          tabBarIcon: (props) => <TabBarIcon name="timer-outline" {...props} />,
+          title: "Settings",
+          tabBarIcon: (props) => <TabBarIcon name="menu" {...props} />,
         }}
       />
     </Tab.Navigator>
