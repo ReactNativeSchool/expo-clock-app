@@ -5,51 +5,51 @@
 
 import { DefaultTheme, DarkTheme } from "@react-navigation/native";
 
-export const white = "#fff";
+export const white = "#FDFFFC";
 export const black = "#000000";
 
 const Themes = {
   light: {
-    text: black,
-    textSubtle: "#595959",
-    textGreen: "#06d6a0",
-    textRed: "#ef476f",
+    text: "#011627",
+    textSubtle: "#AAB3BB",
+    textGreen: "#2EC4B6",
+    textRed: "#E71D36",
 
     background: white,
-    border: "#ccc",
+    border: "#CCD2D7",
 
-    tabBarActive: "#F47C7C",
-    tabBarInactive: "#757575",
+    tabBarActive: "#E59B36",
+    tabBarInactive: "#84929E",
 
-    btnBg: "#dbdbdb",
-    btnText: "#333333",
+    btnBg: "#C5D0D8",
+    btnText: "#FCFCFD",
 
-    btnBgRed: "#e83f34",
-    btnTextRed: "#320e0b",
+    btnBgRed: "#E71D36",
+    btnTextRed: white,
 
-    btnBgGreen: "#94ebab",
-    btnTextGreen: "#0e3f1a",
+    btnBgGreen: "#2EC4B6",
+    btnTextGreen: "#F7FDFC",
   },
   dark: {
     text: white,
-    textSubtle: "#595959",
-    textGreen: "#06d6a0",
-    textRed: "#ef476f",
+    textSubtle: "#AAB3BB",
+    textGreen: "#2EC4B6",
+    textRed: "#E71D36",
 
-    background: black,
-    border: "#ccc",
+    background: "#011627",
+    border: "#434D56",
 
-    tabBarActive: "#ff9f06",
-    tabBarInactive: "#757575",
+    tabBarActive: "#FF9F1C",
+    tabBarInactive: "#5A6772",
 
-    btnBg: "#333333",
+    btnBg: "#445664",
     btnText: white,
 
-    btnBgRed: "#320e0b",
-    btnTextRed: "#e83f34",
+    btnBgRed: "#E71D36",
+    btnTextRed: white,
 
-    btnBgGreen: "#082a11",
-    btnTextGreen: "#26ae49",
+    btnBgGreen: "#2EC4B6",
+    btnTextGreen: white,
   },
 };
 
