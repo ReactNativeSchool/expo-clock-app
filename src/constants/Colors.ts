@@ -14,6 +14,9 @@ const Themes = {
     background: white,
     border: "#ccc",
 
+    tabBarActive: "#F47C7C",
+    tabBarInactive: "#757575",
+
     btnBg: "#dbdbdb",
     btnText: "#333333",
 
@@ -27,6 +30,9 @@ const Themes = {
     text: white,
     background: black,
     border: "#ccc",
+
+    tabBarActive: "#ff9f06",
+    tabBarInactive: "#757575",
 
     btnBg: "#333333",
     btnText: white,
@@ -43,11 +49,11 @@ export const ReactNavigationLightTheme = {
   ...DefaultTheme,
   colors: {
     ...DefaultTheme.colors,
-    primary: "#e8513c",
+    primary: Themes.light.tabBarActive,
     background: Themes.light.background,
     card: Themes.light.background,
     text: Themes.light.text,
-    border: Themes.light.border,
+    border: "transparent",
   },
 };
 
@@ -55,11 +61,11 @@ export const ReactNavigationDarkTheme = {
   ...DarkTheme,
   colors: {
     ...DarkTheme.colors,
-    primary: "#f45357",
+    primary: Themes.dark.tabBarActive,
     background: Themes.dark.background,
     card: Themes.dark.background,
     text: Themes.dark.text,
-    border: Themes.dark.border,
+    border: "transparent",
   },
 };
 
