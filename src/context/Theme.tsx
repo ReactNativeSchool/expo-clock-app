@@ -1,7 +1,9 @@
 import React, { createContext, useContext, useState } from "react";
 
+import { useColorScheme } from "hooks/useColorScheme";
+
 export const Themes: ITheme[] = ["light", "dark", "forest"];
-export type ITheme = null | "light" | "dark" | "forest";
+export type ITheme = "light" | "dark" | "forest";
 
 type IThemeContext = {
   theme: ITheme;
@@ -9,7 +11,7 @@ type IThemeContext = {
 };
 
 const ThemeContext = createContext<IThemeContext>({
-  theme: null,
+  theme: "light",
   setTheme: () => {},
 });
 
@@ -18,7 +20,8 @@ type ThemeProviderProps = {
 };
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [theme, setTheme] = useState<ITheme>(null);
+  const systemTheme = useColorScheme();
+  const [theme, setTheme] = useState<ITheme>(systemTheme);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>

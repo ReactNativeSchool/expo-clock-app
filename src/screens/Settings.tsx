@@ -8,7 +8,7 @@ import {
 
 import { View, Text } from "components/themed";
 import { useThemeColors } from "hooks/useThemeColors";
-import { useCustomTheme, Themes, ITheme } from "context/Theme";
+import { useCustomTheme, Themes } from "context/Theme";
 
 const Border = () => {
   const { colors } = useThemeColors();
@@ -48,10 +48,9 @@ const ThemeRow = ({ children, checked, onPress }: ThemeRowProps) => {
 export default () => {
   const { theme, setTheme } = useCustomTheme();
 
-  const availableThemes = Themes.filter((theme) => theme !== null);
   return (
     <ScrollView style={styles.container}>
-      {availableThemes.map((key, index) => (
+      {Themes.map((key, index) => (
         <React.Fragment key={key}>
           <ThemeRow onPress={() => setTheme(key)} checked={theme === key}>
             {key}
