@@ -4,6 +4,7 @@ import {
 } from "react-native";
 
 import Colors from "constants/Colors";
+import { useCustomTheme } from "context/Theme";
 
 export const useColorScheme = (): NonNullable<ColorSchemeName> => {
   return "dark";
@@ -12,8 +13,13 @@ export const useColorScheme = (): NonNullable<ColorSchemeName> => {
 
 export function useThemeColors() {
   const theme = useColorScheme();
+  const customTheme = useCustomTheme();
+
+  // Could just set the default theme to be the system color scheme
+  const activeTheme = customTheme.theme ? customTheme.theme : theme;
+
   return {
-    theme,
-    colors: Colors[theme],
+    theme: activeTheme,
+    colors: Colors[activeTheme],
   };
 }

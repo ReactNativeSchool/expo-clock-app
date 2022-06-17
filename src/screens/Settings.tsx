@@ -7,6 +7,7 @@ import {
 
 import { View, Text } from "components/themed";
 import { useThemeColors } from "hooks/useThemeColors";
+import { useCustomTheme } from "context/Theme";
 
 const Border = () => {
   const { colors } = useThemeColors();
@@ -44,11 +45,17 @@ const ThemeRow = ({ children, checked, onPress }: ThemeRowProps) => {
 };
 
 export default () => {
+  const { theme, setTheme } = useCustomTheme();
+
   return (
     <ScrollView style={styles.container}>
-      <ThemeRow>Light</ThemeRow>
+      <ThemeRow onPress={() => setTheme("light")} checked={theme === "light"}>
+        Light
+      </ThemeRow>
       <Border />
-      <ThemeRow checked>Dark</ThemeRow>
+      <ThemeRow onPress={() => setTheme("dark")} checked={theme === "dark"}>
+        Dark
+      </ThemeRow>
     </ScrollView>
   );
 };
