@@ -1,5 +1,3 @@
-import { DefaultTheme, DarkTheme } from "@react-navigation/native";
-
 export const white = "#FDFFFC";
 
 const Themes = {
@@ -12,7 +10,7 @@ const Themes = {
     background: white,
     border: "#CCD2D7",
 
-    tabBarActive: "#E59B36",
+    tabBarActive: "#E71D36",
     tabBarInactive: "#84929E",
 
     btnBg: "#C5D0D8",
@@ -44,30 +42,6 @@ const Themes = {
 
     btnBgGreen: "#2EC4B6",
     btnTextGreen: white,
-  },
-};
-
-export const ReactNavigationLightTheme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: Themes.light.tabBarActive,
-    background: Themes.light.background,
-    card: Themes.light.background,
-    text: Themes.light.text,
-    border: "transparent",
-  },
-};
-
-export const ReactNavigationDarkTheme = {
-  ...DarkTheme,
-  colors: {
-    ...DarkTheme.colors,
-    primary: Themes.dark.tabBarActive,
-    background: Themes.dark.background,
-    card: Themes.dark.background,
-    text: Themes.dark.text,
-    border: "transparent",
   },
 };
 

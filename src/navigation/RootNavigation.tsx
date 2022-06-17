@@ -1,22 +1,26 @@
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, DefaultTheme } from "@react-navigation/native";
 
 import BottomTabs from "navigation/BottomTabs";
 import { useThemeColors } from "hooks/useThemeColors";
 
-import {
-  ReactNavigationLightTheme,
-  ReactNavigationDarkTheme,
-} from "constants/Colors";
-
 const RootNavigation = () => {
-  const { theme } = useThemeColors();
+  const { colors } = useThemeColors();
+
+  const navigationTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      ...DefaultTheme.colors,
+      primary: colors.tabBarActive,
+      background: colors.background,
+      card: colors.background,
+      text: colors.text,
+      border: "transparent",
+    },
+  };
 
   return (
-    <NavigationContainer
-      theme={
-        theme === "dark" ? ReactNavigationDarkTheme : ReactNavigationLightTheme
-      }
-    >
+    <NavigationContainer theme={navigationTheme}>
       <BottomTabs />
     </NavigationContainer>
   );
