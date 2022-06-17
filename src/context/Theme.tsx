@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useState } from "react";
 
-export type Themes = null | "light" | "dark";
+export const Themes: ITheme[] = ["light", "dark", "forest"];
+export type ITheme = null | "light" | "dark" | "forest";
 
 type IThemeContext = {
-  theme: Themes;
-  setTheme: (theme: Themes) => void;
+  theme: ITheme;
+  setTheme: (theme: ITheme) => void;
 };
 
 const ThemeContext = createContext<IThemeContext>({
@@ -17,7 +18,7 @@ type ThemeProviderProps = {
 };
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [theme, setTheme] = useState<Themes>(null);
+  const [theme, setTheme] = useState<ITheme>(null);
 
   return (
     <ThemeContext.Provider value={{ theme, setTheme }}>
@@ -29,7 +30,14 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 export const useCustomTheme = () => {
   const context = useContext(ThemeContext);
 
+  let isDark = false;
+
+  if (context.theme && ["dark", "forest"].includes(context.theme)) {
+    isDark = true;
+  }
+
   return {
+    isDark,
     theme: context.theme,
     setTheme: context.setTheme,
   };

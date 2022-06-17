@@ -5,9 +5,9 @@ import { useThemeColors } from "hooks/useThemeColors";
 import { StatusBarProps } from "./types";
 
 export const StatusBar = (props: StatusBarProps) => {
-  const { theme } = useThemeColors();
+  const { isDark } = useThemeColors();
 
-  const barStyle = theme === "dark" ? "light-content" : "dark-content";
+  const barStyle = isDark ? "light-content" : "dark-content";
 
   return <DefaultStatusBar barStyle={barStyle} {...props} />;
 };

@@ -1,3 +1,4 @@
+import React from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -7,7 +8,7 @@ import {
 
 import { View, Text } from "components/themed";
 import { useThemeColors } from "hooks/useThemeColors";
-import { useCustomTheme } from "context/Theme";
+import { useCustomTheme, Themes, ITheme } from "context/Theme";
 
 const Border = () => {
   const { colors } = useThemeColors();
@@ -47,15 +48,17 @@ const ThemeRow = ({ children, checked, onPress }: ThemeRowProps) => {
 export default () => {
   const { theme, setTheme } = useCustomTheme();
 
+  const availableThemes = Themes.filter((theme) => theme !== null);
   return (
     <ScrollView style={styles.container}>
-      <ThemeRow onPress={() => setTheme("light")} checked={theme === "light"}>
-        Light
-      </ThemeRow>
-      <Border />
-      <ThemeRow onPress={() => setTheme("dark")} checked={theme === "dark"}>
-        Dark
-      </ThemeRow>
+      {availableThemes.map((key, index) => (
+        <React.Fragment key={key}>
+          <ThemeRow onPress={() => setTheme(key)} checked={theme === key}>
+            {key}
+          </ThemeRow>
+          {index !== Themes.length - 1 && <Border />}
+        </React.Fragment>
+      ))}
     </ScrollView>
   );
 };

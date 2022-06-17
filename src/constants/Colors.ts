@@ -43,6 +43,27 @@ const Themes = {
     btnBgGreen: "#2EC4B6",
     btnTextGreen: white,
   },
+  forest: {
+    text: "#FEFAE0",
+    textSubtle: "#FEFAE0",
+    textGreen: "#606C38",
+    textRed: "#BC6C25",
+
+    background: "#283618",
+    border: "#606C38",
+
+    tabBarActive: "#BC6C25",
+    tabBarInactive: "#577535",
+
+    btnBg: "#DDA15E",
+    btnText: "#FEFAE0",
+
+    btnBgRed: "#BC6C25",
+    btnTextRed: "#FEFAE0",
+
+    btnBgGreen: "#606C38",
+    btnTextGreen: "#FEFAE0",
+  },
 };
 
 export default Themes;

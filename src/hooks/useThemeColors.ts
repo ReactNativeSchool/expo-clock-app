@@ -20,6 +20,7 @@ export function useThemeColors() {
 
   return {
     theme: activeTheme,
+    isDark: customTheme.isDark || activeTheme === "dark",
     colors: Colors[activeTheme],
   };
 }
