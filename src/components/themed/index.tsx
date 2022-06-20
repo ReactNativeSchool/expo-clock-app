@@ -1,5 +1,3 @@
-export { Text } from "./Text";
+export { Text, TextProps } from "./Text";
 export { View, SafeAreaView } from "./View";
-export { StatusBar } from "./StatusBar";
-
-export * from "./types";
+export { StatusBar, StatusBarProps } from "./StatusBar";

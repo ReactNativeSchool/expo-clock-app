@@ -2,7 +2,7 @@ import { StatusBar as DefaultStatusBar } from "react-native";
 
 import { useThemeColors } from "hooks/useThemeColors";
 
-import { StatusBarProps } from "./types";
+export type StatusBarProps = DefaultStatusBar["props"];
 
 export const StatusBar = (props: StatusBarProps) => {
   const { isDark } = useThemeColors();
