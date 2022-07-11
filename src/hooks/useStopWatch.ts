@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 export type LapData = {
   time: string;
@@ -21,24 +21,22 @@ const formatMs = (milliseconds: number) => {
 export const useStopWatch = () => {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const [runningInterval, setRunningInterval] =
-    useState<ReturnType<typeof setInterval>>();
+  const interval = useRef<ReturnType<typeof setInterval>>();
   const [laps, setLaps] = useState<number[]>([]);
 
   const start = () => {
     setIsRunning(true);
-    const interval = setInterval(() => {
+    interval.current = setInterval(() => {
       setTime((time) => time + 1);
     }, 10);
-    setRunningInterval(interval);
   };
 
   const stop = () => {
     setIsRunning(false);
 
-    if (runningInterval) {
-      clearInterval(runningInterval);
-      setRunningInterval(undefined);
+    if (interval.current) {
+      clearInterval(interval.current);
+      interval.current = undefined;
     }
   };
 
@@ -46,8 +44,8 @@ export const useStopWatch = () => {
     setIsRunning(false);
     setTime(0);
     setLaps([]);
-    if (runningInterval) {
-      setRunningInterval(undefined);
+    if (interval.current) {
+      interval.current = undefined;
     }
   };
 
