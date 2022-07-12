@@ -6,16 +6,16 @@ export type LapData = {
 };
 
 const formatMs = (milliseconds: number) => {
-  const seconds = Math.floor(milliseconds % 60);
+  const ms = Math.floor(milliseconds % 60);
+  const prettyMs = ms < 10 ? `0${ms}` : ms;
+
+  const seconds = Math.floor((milliseconds / 60) % 60);
   const prettySeconds = seconds < 10 ? `0${seconds}` : seconds;
 
-  const minutes = Math.floor((milliseconds / 60) % 60);
+  const minutes = Math.floor((milliseconds / 60 / 60) % 24);
   const prettyMinutes = minutes < 10 ? `0${minutes}` : minutes;
 
-  const hours = Math.floor((milliseconds / 60 / 60) % 24);
-  const prettyHours = hours < 10 ? `0${hours}` : hours;
-
-  return `${prettyHours}:${prettyMinutes}:${prettySeconds}`;
+  return `${prettyMinutes}:${prettySeconds}:${prettyMs}`;
 };
 
 export const useStopWatch = () => {
@@ -28,7 +28,7 @@ export const useStopWatch = () => {
     setIsRunning(true);
     interval.current = setInterval(() => {
       setTime((time) => time + 1);
-    }, 10);
+    }, 1);
   };
 
   const stop = () => {
