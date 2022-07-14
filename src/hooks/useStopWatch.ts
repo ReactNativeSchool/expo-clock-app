@@ -38,21 +38,17 @@ const formatMs = (milliseconds: number) => {
 };
 
 export const useStopWatch = () => {
-  // const [startTime, setStartTime] = useState<number>(Date.now());
   const [time, setTime] = useState(0);
   const [timeWhenLastStopped, setTimeWhenLastStopped] = useState<number>(0);
   const [isRunning, setIsRunning] = useState(false);
   const interval = useRef<ReturnType<typeof setInterval>>();
-  // const [laps, setLaps] = useState<number[]>([]);
+  const [laps, setLaps] = useState<number[]>([]);
 
   const start = () => {
     setIsRunning(true);
     const startTime = Date.now();
-    // setStartTime(newStartTime);
     interval.current = setInterval(() => {
-      // if (startTime) {
       setTime(() => Date.now() - startTime + timeWhenLastStopped);
-      // }
     }, 1);
   };
 
@@ -70,8 +66,7 @@ export const useStopWatch = () => {
     setIsRunning(false);
     setTime(0);
     setTimeWhenLastStopped(0);
-    // setLaps([]);
-    // setStartTime(Date.now());
+    setLaps([]);
     if (interval.current) {
       clearInterval(interval.current);
       interval.current = undefined;
@@ -79,37 +74,34 @@ export const useStopWatch = () => {
   };
 
   const lap = () => {
-    // setLaps((laps) => [time, ...laps]);
+    setLaps((laps) => [time, ...laps]);
   };
 
   let slowestLapTime: number | undefined;
   let fastestLapTime: number | undefined;
-  // const formattedLapData = laps.map((l, index) => {
-  //   const previousLap = laps[index + 1] || 0;
-  //   const lapTime = l - previousLap;
+  const formattedLapData = laps.map((l, index) => {
+    const previousLap = laps[index + 1] || 0;
+    const lapTime = l - previousLap;
 
-  //   if (!slowestLapTime || lapTime > slowestLapTime) {
-  //     slowestLapTime = lapTime;
-  //   }
+    if (!slowestLapTime || lapTime > slowestLapTime) {
+      slowestLapTime = lapTime;
+    }
 
-  //   if (!fastestLapTime || lapTime < fastestLapTime) {
-  //     fastestLapTime = lapTime;
-  //   }
+    if (!fastestLapTime || lapTime < fastestLapTime) {
+      fastestLapTime = lapTime;
+    }
 
-  //   return {
-  //     time: formatMs(lapTime),
-  //     lap: laps.length - index,
-  //   };
-  // });
+    return {
+      time: formatMs(lapTime),
+      lap: laps.length - index,
+    };
+  });
 
-  console.log();
   return {
     // Data
     time: formatMs(time),
-    // currentLapTime: laps[0] ? formatMs(time - laps[0] || 0) : formatMs(time),
-    currentLapTime: formatMs(time),
-    // laps: formattedLapData,
-    laps: [],
+    currentLapTime: laps[0] ? formatMs(time - laps[0]) : formatMs(time),
+    laps: formattedLapData,
     slowestLapTime: formatMs(slowestLapTime || 0),
     fastestLapTime: formatMs(fastestLapTime || 0),
 
