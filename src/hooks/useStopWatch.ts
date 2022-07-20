@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export type LapData = {
   time: string;
@@ -39,27 +39,36 @@ const formatMs = (milliseconds: number) => {
 
 export const useStopWatch = () => {
   const [time, setTime] = useState(0);
+
   const [timeWhenLastStopped, setTimeWhenLastStopped] = useState<number>(0);
   const [isRunning, setIsRunning] = useState(false);
-  const interval = useRef<ReturnType<typeof setInterval>>();
+  const [startTime, setStartTime] = useState<number>(0);
   const [laps, setLaps] = useState<number[]>([]);
+
+  const interval = useRef<ReturnType<typeof setInterval>>();
+
+  useEffect(() => {
+    if (startTime > 0) {
+      interval.current = setInterval(() => {
+        setTime(() => Date.now() - startTime + timeWhenLastStopped);
+      }, 1);
+    } else {
+      if (interval.current) {
+        clearInterval(interval.current);
+        interval.current = undefined;
+      }
+    }
+  }, [startTime]);
 
   const start = () => {
     setIsRunning(true);
-    const startTime = Date.now();
-    interval.current = setInterval(() => {
-      setTime(() => Date.now() - startTime + timeWhenLastStopped);
-    }, 1);
+    setStartTime(Date.now());
   };
 
   const stop = () => {
     setIsRunning(false);
     setTimeWhenLastStopped(time);
-
-    if (interval.current) {
-      clearInterval(interval.current);
-      interval.current = undefined;
-    }
+    setStartTime(0);
   };
 
   const reset = () => {
@@ -67,10 +76,7 @@ export const useStopWatch = () => {
     setTime(0);
     setTimeWhenLastStopped(0);
     setLaps([]);
-    if (interval.current) {
-      clearInterval(interval.current);
-      interval.current = undefined;
-    }
+    setStartTime(0);
   };
 
   const lap = () => {
