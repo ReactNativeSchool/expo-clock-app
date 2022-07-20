@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export type LapData = {
   time: string;
@@ -37,7 +38,16 @@ const formatMs = (milliseconds: number) => {
   return str;
 };
 
+const ASYNC_KEYS = {
+  timeWhenLastStopped: "useStopWatch::timeWhenLastStopped",
+  isRunning: "useStopWatch::isRunning",
+  startTime: "useStopWatch::startTime",
+  laps: "useStopWatch::laps",
+};
+
 export const useStopWatch = () => {
+  const [dataLoaded, setDataLoaded] = useState(false);
+
   const [time, setTime] = useState(0);
 
   const [timeWhenLastStopped, setTimeWhenLastStopped] = useState<number>(0);
@@ -46,6 +56,64 @@ export const useStopWatch = () => {
   const [laps, setLaps] = useState<number[]>([]);
 
   const interval = useRef<ReturnType<typeof setInterval>>();
+
+  useEffect(() => {
+    // load data from async storage in case app was quit
+    const loadData = async () => {
+      try {
+        const persistedValues = await AsyncStorage.multiGet([
+          ASYNC_KEYS.timeWhenLastStopped,
+          ASYNC_KEYS.isRunning,
+          ASYNC_KEYS.startTime,
+          ASYNC_KEYS.laps,
+        ]);
+
+        const [
+          persistedTimeWhenLastStopped,
+          persistedIsRunning,
+          persistedStartTime,
+          persistedLaps,
+        ] = persistedValues;
+
+        setTimeWhenLastStopped(
+          persistedTimeWhenLastStopped[1]
+            ? parseInt(persistedTimeWhenLastStopped[1])
+            : 0
+        );
+        setIsRunning(persistedIsRunning[1] === "true");
+        setStartTime(
+          persistedStartTime[1] ? parseInt(persistedStartTime[1]) : 0
+        );
+        setLaps(persistedLaps[1] ? JSON.parse(persistedLaps[1]) : []);
+        setDataLoaded(true);
+      } catch (e) {
+        console.log("error loading persisted data", e);
+        setDataLoaded(true);
+      }
+    };
+
+    loadData();
+  }, []);
+
+  useEffect(() => {
+    // persist the latest data to async storage to be used later, if needed
+    const persist = async () => {
+      try {
+        await AsyncStorage.multiSet([
+          [ASYNC_KEYS.timeWhenLastStopped, timeWhenLastStopped.toString()],
+          [ASYNC_KEYS.isRunning, isRunning.toString()],
+          [ASYNC_KEYS.startTime, startTime.toString()],
+          [ASYNC_KEYS.laps, JSON.stringify(laps)],
+        ]);
+      } catch (e) {
+        console.log("error persisting data");
+      }
+    };
+
+    if (dataLoaded) {
+      persist();
+    }
+  }, [timeWhenLastStopped, isRunning, startTime, laps, dataLoaded]);
 
   useEffect(() => {
     if (startTime > 0) {
@@ -114,6 +182,7 @@ export const useStopWatch = () => {
     // Booleans
     hasStarted: time > 0,
     isRunning,
+    dataLoaded,
 
     // Actions
     start,
