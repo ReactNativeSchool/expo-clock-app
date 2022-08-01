@@ -141,10 +141,11 @@ export const useStopWatch = () => {
 
   const reset = () => {
     setIsRunning(false);
+    setStartTime(0);
+    setTimeWhenLastStopped(0);
     setTime(0);
     setTimeWhenLastStopped(0);
     setLaps([]);
-    setStartTime(0);
   };
 
   const lap = () => {
@@ -153,7 +154,8 @@ export const useStopWatch = () => {
 
   let slowestLapTime: number | undefined;
   let fastestLapTime: number | undefined;
-  const formattedLapData = laps.map((l, index) => {
+
+  const formattedLapData: LapData[] = laps.map((l, index) => {
     const previousLap = laps[index + 1] || 0;
     const lapTime = l - previousLap;
 
@@ -172,22 +174,18 @@ export const useStopWatch = () => {
   });
 
   return {
-    // Data
-    time: formatMs(time),
-    currentLapTime: laps[0] ? formatMs(time - laps[0]) : formatMs(time),
-    laps: formattedLapData,
-    slowestLapTime: formatMs(slowestLapTime || 0),
-    fastestLapTime: formatMs(fastestLapTime || 0),
-
-    // Booleans
-    hasStarted: time > 0,
-    isRunning,
-    dataLoaded,
-
-    // Actions
     start,
     stop,
     reset,
     lap,
+
+    isRunning,
+    time: formatMs(time),
+
+    laps: formattedLapData,
+    currentLapTime: laps[0] ? formatMs(time - laps[0]) : formatMs(time),
+    hasStarted: time > 0,
+    slowestLapTime: formatMs(slowestLapTime || 0),
+    fastestLapTime: formatMs(fastestLapTime || 0),
   };
 };
