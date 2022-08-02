@@ -1,52 +1,76 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 
 export type LapData = {
   time: string;
   lap: number;
 };
 
+const padStart = (num: number) => {
+  return num.toString().padStart(2, "0");
+};
+
 const formatMs = (milliseconds: number) => {
-  const ms = Math.floor(milliseconds % 60);
-  const prettyMs = ms < 10 ? `0${ms}` : ms;
+  let seconds = Math.floor(milliseconds / 1000);
+  let minutes = Math.floor(seconds / 60);
+  let hours = Math.floor(minutes / 60);
 
-  const seconds = Math.floor((milliseconds / 60) % 60);
-  const prettySeconds = seconds < 10 ? `0${seconds}` : seconds;
+  // using the modulus operator gets the remainder if the time roles over
+  // we don't do this for hours because we want them to rollover
+  // seconds = 81 -> minutes = 1, seconds = 21.
+  // 60 minutes in an hour, 60 seconds in a minute, 1000 milliseconds in a second.
+  minutes = minutes % 60;
+  seconds = seconds % 60;
+  // divide the milliseconds by 10 to get the tenths of a second. 543 -> 54
+  const ms = Math.floor((milliseconds % 1000) / 10);
 
-  const minutes = Math.floor((milliseconds / 60 / 60) % 24);
-  const prettyMinutes = minutes < 10 ? `0${minutes}` : minutes;
+  let str = `${padStart(minutes)}:${padStart(seconds)}.${padStart(ms)}`;
 
-  return `${prettyMinutes}:${prettySeconds}:${prettyMs}`;
+  if (hours > 0) {
+    str = `${padStart(hours)}:${str}`;
+  }
+
+  return str;
 };
 
 export const useStopWatch = () => {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const interval = useRef<ReturnType<typeof setInterval>>();
+  const [startTime, setStartTime] = useState<number>(0);
+  const [timeWhenLastStopped, setTimeWhenLastStopped] = useState<number>(0);
   const [laps, setLaps] = useState<number[]>([]);
+
+  const interval = useRef<ReturnType<typeof setInterval>>();
+
+  useEffect(() => {
+    if (startTime > 0) {
+      interval.current = setInterval(() => {
+        setTime(() => Date.now() - startTime + timeWhenLastStopped);
+      }, 1);
+    } else {
+      if (interval.current) {
+        clearInterval(interval.current);
+        interval.current = undefined;
+      }
+    }
+  }, [startTime]);
 
   const start = () => {
     setIsRunning(true);
-    interval.current = setInterval(() => {
-      setTime((time) => time + 1);
-    }, 1);
+    setStartTime(Date.now());
   };
 
   const stop = () => {
     setIsRunning(false);
-
-    if (interval.current) {
-      clearInterval(interval.current);
-      interval.current = undefined;
-    }
+    setStartTime(0);
+    setTimeWhenLastStopped(time);
   };
 
   const reset = () => {
     setIsRunning(false);
+    setStartTime(0);
+    setTimeWhenLastStopped(0);
     setTime(0);
     setLaps([]);
-    if (interval.current) {
-      interval.current = undefined;
-    }
   };
 
   const lap = () => {
@@ -55,7 +79,8 @@ export const useStopWatch = () => {
 
   let slowestLapTime: number | undefined;
   let fastestLapTime: number | undefined;
-  const formattedLapData = laps.map((l, index) => {
+
+  const formattedLapData: LapData[] = laps.map((l, index) => {
     const previousLap = laps[index + 1] || 0;
     const lapTime = l - previousLap;
 
@@ -74,21 +99,18 @@ export const useStopWatch = () => {
   });
 
   return {
-    // Data
-    time: formatMs(time),
-    currentLapTime: laps[0] ? formatMs(time - laps[0] || 0) : formatMs(time),
-    laps: formattedLapData,
-    slowestLapTime: formatMs(slowestLapTime || 0),
-    fastestLapTime: formatMs(fastestLapTime || 0),
-
-    // Booleans
-    hasStarted: time > 0,
-    isRunning,
-
-    // Actions
     start,
     stop,
     reset,
     lap,
+
+    isRunning,
+    time: formatMs(time),
+
+    laps: formattedLapData,
+    currentLapTime: laps[0] ? formatMs(time - laps[0]) : formatMs(time),
+    hasStarted: time > 0,
+    slowestLapTime: formatMs(slowestLapTime || 0),
+    fastestLapTime: formatMs(fastestLapTime || 0),
   };
 };
