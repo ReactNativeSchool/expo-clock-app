@@ -18,7 +18,12 @@ const StopWatch = () => {
     hasStarted,
     slowestLapTime,
     fastestLapTime,
+    dataLoaded,
   } = useStopWatch();
+
+  if (!dataLoaded) {
+    return null;
+  }
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
